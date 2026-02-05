@@ -1,0 +1,49 @@
+{
+  "$schema": "./node_modules/oxlint/configuration_schema.json",
+  "plugins": ["eslint", "import", "oxc", "promise", "typescript", "unicorn", "node"],
+  "categories": {
+    "correctness": "error",
+    "perf": "error",
+    "suspicious": "error",
+    "pedantic": "error"
+  },
+  "rules": {
+    "eslint/arrow-body-style": ["error", "as-needed"],
+    "eslint/curly": "error",
+    "eslint/default-case-last": "error",
+    "eslint/default-param-last": "error",
+    "eslint/func-style": ["error", "expression"],
+    "eslint/no-multi-assign": "error",
+    "eslint/no-nested-ternary": "error",
+    "eslint/no-param-reassign": [
+      "error",
+      { "props": true, "ignorePropertyModificationsFor": ["acc"] }
+    ],
+    "eslint/no-return-assign": "error",
+    "eslint/no-var": "error",
+    "eslint/prefer-const": "error",
+    "eslint/prefer-object-spread": "error",
+    "eslint/prefer-template": "error",
+    "eslint/sort-keys": ["error", "asc", { "allowLineSeparatedGroups": true }],
+    "eslint/yoda": "error",
+    "import/consistent-type-specifier-style": ["error", "prefer-top-level"],
+    "import/first": "error",
+    "import/no-commonjs": "error",
+    "import/no-duplicates": "error",
+    "import/no-mutable-exports": "error",
+    "promise/no-return-wrap": "error",
+    "promise/prefer-await-to-then": "error",
+    "typescript/array-type": ["error", { "default": "array-simple" }],
+    "typescript/consistent-indexed-object-style": ["error", "record"],
+    "typescript/consistent-type-definitions": ["error", "type"],
+    "typescript/consistent-type-imports": "error",
+    "typescript/no-explicit-any": "error",
+    "typescript/no-import-type-side-effects": "error",
+    "typescript/no-inferrable-types": "error",
+    "typescript/no-non-null-assertion": "error",
+    "typescript/prefer-for-of": "error",
+    "typescript/prefer-function-type": "error",
+    "unicorn/filename-case": ["error", { "case": "kebabCase" }],
+    "unicorn/no-anonymous-default-export": "error"
+  }
+}
