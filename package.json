@@ -18,6 +18,8 @@
     "lint:fix": "oxlint --type-aware --deny-warnings --format=unix --fix"
   },
   "devDependencies": {
+    "@commitlint/cli": "^20.4.1",
+    "@commitlint/config-conventional": "^20.4.1",
     "lefthook": "^2.1.0",
     "oxfmt": "^0.28.0",
     "oxlint": "^1.43.0",
