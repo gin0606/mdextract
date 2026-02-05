@@ -1,0 +1,19 @@
+{
+  "name": "mdrun",
+  "version": "0.0.1",
+  "description": "CLI tool to execute code blocks from README.md for easier development setup",
+  "keywords": [],
+  "license": "ISC",
+  "author": "gin0606 (https://github.com/gin0606)",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/gin0606/mdrun.git"
+  },
+  "type": "module",
+  "main": "index.js",
+  "scripts": {},
+  "engines": {
+    "node": ">=24"
+  },
+  "packageManager": "pnpm@10.28.0"
+}

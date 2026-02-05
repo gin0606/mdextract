@@ -1,0 +1,9 @@
+autoInstallPeers: false
+blockExoticSubdeps: true
+gitChecks: true
+minimumReleaseAge: 60
+optimisticRepeatInstall: true
+strictDepBuilds: true
+strictPeerDependencies: true
+trustPolicy: no-downgrade
+verifyDepsBeforeRun: install
