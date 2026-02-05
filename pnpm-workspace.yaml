@@ -1,9 +1,20 @@
 autoInstallPeers: false
+
 blockExoticSubdeps: true
+
 gitChecks: true
+
 minimumReleaseAge: 60
+
+onlyBuiltDependencies:
+  - lefthook
+
 optimisticRepeatInstall: true
+
 strictDepBuilds: true
+
 strictPeerDependencies: true
+
 trustPolicy: no-downgrade
+
 verifyDepsBeforeRun: install
