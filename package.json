@@ -1,5 +1,5 @@
 {
-  "name": "mdrun",
+  "name": "@gin0606/mdrun",
   "version": "0.0.1",
   "description": "CLI tool to execute code blocks from README.md for easier development setup",
   "keywords": [],
@@ -18,6 +18,9 @@
   "type": "module",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
+  "publishConfig": {
+    "access": "public"
+  },
   "scripts": {
     "build": "tsc",
     "build:watch": "tsc --watch",
