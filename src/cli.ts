@@ -18,14 +18,14 @@ const generateFishCompletion = (): string =>
     "# Installation: mdrun completion --fish | source",
     "#    or: mdrun completion --fish > ~/.config/fish/completions/mdrun.fish",
     "",
-    "# Disable file completions by default for second argument",
-    "complete -c mdrun -f -n '__fish_seen_argument -a \"*.md\"'",
-    "",
-    "# Section path completions (second argument)",
-    "complete -c mdrun -f -n '__fish_seen_argument -a \"*.md\"' -a '(",
+    "# Section path completions for --section / -s",
+    "complete -c mdrun -l section -s s -rfa '(",
     "  set -l tokens (commandline -opc)",
-    "  if test (count $tokens) -ge 2",
-    "    mdrun --get-yargs-completions $tokens[2] (commandline -ct) 2>/dev/null",
+    "  for i in (seq (count $tokens))",
+    '    if string match -q -- "*.md" $tokens[$i]',
+    "      mdrun --get-yargs-completions $tokens[$i] (commandline -ct) 2>/dev/null",
+    "      break",
+    "    end",
     "  end",
     ")'",
     "",
@@ -54,18 +54,18 @@ const completeSectionPath = (
 
 const parseCli = async (): Promise<CliOptions> => {
   const argv = await yargs(hideBin(process.argv))
-    .command("$0 <file> [section-path]", "Execute code blocks from Markdown files", (y) =>
-      y
-        .positional("file", {
-          demandOption: true,
-          describe: "Target Markdown file",
-          type: "string",
-        })
-        .positional("section-path", {
-          describe: "Section path to execute",
-          type: "string",
-        }),
+    .command("$0 <file>", "Execute code blocks from Markdown files", (y) =>
+      y.positional("file", {
+        demandOption: true,
+        describe: "Target Markdown file",
+        type: "string",
+      }),
     )
+    .option("section", {
+      alias: "s",
+      describe: "Section path to execute",
+      type: "string",
+    })
     .option("list", {
       alias: "l",
       default: false,
@@ -88,7 +88,7 @@ const parseCli = async (): Promise<CliOptions> => {
     dryRun: Boolean(argv["dry-run"]),
     file: String(argv["file"]),
     list: Boolean(argv["list"]),
-    sectionPath: typeof argv["section-path"] === "string" ? argv["section-path"] : undefined,
+    sectionPath: typeof argv["section"] === "string" ? argv["section"] : undefined,
   };
 };
 
