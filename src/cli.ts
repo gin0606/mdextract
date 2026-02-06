@@ -5,12 +5,10 @@ import { existsSync, readFileSync } from "node:fs";
 import yargs from "yargs";
 import { hideBin } from "yargs/helpers";
 
-import type { CliOptions } from "./types.js";
-
-import { filterCodeBlocks } from "./filter.js";
+import { extractMarkdown, filterCodeBlocks } from "./filter.js";
 import { formatDryRun, formatSectionList } from "./formatter.js";
 import { parseMarkdown } from "./parser.js";
-import { runCodeBlocks } from "./runner.js";
+import { runMarkdown } from "./runner.js";
 
 const generateFishCompletion = (): string =>
   [
@@ -50,6 +48,13 @@ const completeSectionPath = (
   const content = readFileSync(file, "utf-8");
   const { sections } = parseMarkdown(content);
   done(sections.map((s) => s.path));
+};
+
+type CliOptions = {
+  readonly dryRun: boolean;
+  readonly file: string;
+  readonly list: boolean;
+  readonly sectionPath: string | undefined;
 };
 
 const parseCli = async (): Promise<CliOptions> => {
@@ -127,7 +132,8 @@ const run = async (options: CliOptions): Promise<void> => {
     return;
   }
 
-  await runCodeBlocks(filtered);
+  const markdown = extractMarkdown(content, sections, options.sectionPath);
+  await runMarkdown(markdown);
 };
 
 const args = hideBin(process.argv);

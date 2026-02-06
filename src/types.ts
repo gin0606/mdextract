@@ -15,10 +15,3 @@ export type ParseResult = {
   readonly codeBlocks: readonly CodeBlock[];
   readonly sections: readonly Section[];
 };
-
-export type CliOptions = {
-  readonly dryRun: boolean;
-  readonly file: string;
-  readonly list: boolean;
-  readonly sectionPath: string | undefined;
-};

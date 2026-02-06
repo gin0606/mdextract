@@ -52,6 +52,12 @@
       "rules": {
         "eslint/max-lines-per-function": "off"
       }
+    },
+    {
+      "files": ["src/cli.ts"],
+      "rules": {
+        "import/max-dependencies": "off"
+      }
     }
   ]
 }
