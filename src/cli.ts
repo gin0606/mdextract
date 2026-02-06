@@ -12,6 +12,30 @@ import { formatDryRun, formatSectionList } from "./formatter.js";
 import { parseMarkdown } from "./parser.js";
 import { runCodeBlocks } from "./runner.js";
 
+const generateFishCompletion = (): string =>
+  [
+    "# Fish completion for mdrun",
+    "# Installation: mdrun completion --fish | source",
+    "#    or: mdrun completion --fish > ~/.config/fish/completions/mdrun.fish",
+    "",
+    "# Disable file completions by default for second argument",
+    "complete -c mdrun -f -n '__fish_seen_argument -a \"*.md\"'",
+    "",
+    "# Section path completions (second argument)",
+    "complete -c mdrun -f -n '__fish_seen_argument -a \"*.md\"' -a '(",
+    "  set -l tokens (commandline -opc)",
+    "  if test (count $tokens) -ge 2",
+    "    mdrun --get-yargs-completions $tokens[2] (commandline -ct) 2>/dev/null",
+    "  end",
+    ")'",
+    "",
+    "# Options",
+    "complete -c mdrun -l list -s l -d 'List sections (no execution)'",
+    "complete -c mdrun -l dry-run -s n -d 'Show code blocks to be executed (no execution)'",
+    "complete -c mdrun -l help -s h -d 'Show help'",
+    "complete -c mdrun -l version -s v -d 'Show version number'",
+  ].join("\n");
+
 const completeSectionPath = (
   _current: string,
   argv: Record<string, unknown>,
@@ -92,5 +116,10 @@ const run = async (options: CliOptions): Promise<void> => {
   await runCodeBlocks(filtered);
 };
 
-const options = await parseCli();
-await run(options);
+const args = hideBin(process.argv);
+if (args.includes("completion") && args.includes("--fish")) {
+  console.log(generateFishCompletion());
+} else {
+  const options = await parseCli();
+  await run(options);
+}
