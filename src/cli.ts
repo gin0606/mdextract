@@ -115,6 +115,14 @@ const run = async (options: CliOptions): Promise<void> => {
   }
 
   if (filtered.length === 0) {
+    if (options.sectionPath !== undefined) {
+      const sectionExists = sections.some(
+        (s) => s.path === options.sectionPath || s.path.startsWith(`${options.sectionPath}/`),
+      );
+      if (!sectionExists) {
+        console.error(`Warning: Section not found: ${options.sectionPath}`);
+      }
+    }
     console.log("No code blocks found.");
     return;
   }
