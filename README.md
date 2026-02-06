@@ -1,6 +1,9 @@
 # mdrun
 
-A CLI tool that executes code blocks from Markdown files. Makes development setup easier and keeps README maintained.
+A toolkit for extracting and executing code blocks from Markdown files. Makes development setup easier and keeps README maintained.
+
+- **mdextract** — Extract sections from Markdown files to stdout
+- **mdrun** — Read Markdown from stdin and execute code blocks via [zx](https://google.github.io/zx/)
 
 ## Install
 
@@ -10,31 +13,44 @@ npm install -g @gin0606/mdrun
 
 ## Usage
 
-```bash
-# Execute all code blocks
-mdrun README.md
+### mdextract
 
-# Execute code blocks in a specific section
-mdrun README.md --section "Setup"
-mdrun README.md -s "Project/Setup/Database"
+```bash
+# Extract all code blocks as Markdown
+mdextract README.md
+
+# Extract a specific section
+mdextract README.md -s "Development/Setup"
 
 # List sections
-mdrun README.md --list
+mdextract README.md --list
 
-# Preview code blocks without executing
-mdrun README.md --dry-run
-mdrun README.md -s "Setup" --dry-run
+# Preview code blocks without output
+mdextract README.md --dry-run
+mdextract README.md -s "Setup" --dry-run
 ```
 
-### Options
+#### Options
 
-| Option          | Description                                    |
-| --------------- | ---------------------------------------------- |
-| `-s, --section` | Section path to execute                        |
-| `-l, --list`    | List sections (no execution)                   |
-| `-n, --dry-run` | Show code blocks to be executed (no execution) |
-| `-h, --help`    | Show help                                      |
-| `-v, --version` | Show version                                   |
+| Option          | Description                  |
+| --------------- | ---------------------------- |
+| `-s, --section` | Section path to extract      |
+| `-l, --list`    | List sections                |
+| `-n, --dry-run` | Show code blocks (no output) |
+| `-h, --help`    | Show help                    |
+| `-v, --version` | Show version                 |
+
+### mdrun
+
+`mdrun` reads Markdown from stdin and executes code blocks using zx.
+
+```bash
+# Pipe mdextract output to mdrun
+mdextract README.md -s "Development/Setup" | mdrun
+
+# Execute all code blocks
+mdextract README.md | mdrun
+```
 
 ### Supported Code Blocks
 
@@ -52,26 +68,26 @@ mdrun uses [zx](https://google.github.io/zx/) to execute Markdown files. The fol
 ### Bash
 
 ```bash
-mdrun completion >> ~/.bashrc
+mdextract completion >> ~/.bashrc
 ```
 
 ### Zsh
 
 ```bash
-mdrun completion >> ~/.zshrc
+mdextract completion >> ~/.zshrc
 ```
 
 ### Fish
 
 ```fish
-mdrun completion --fish > ~/.config/fish/completions/mdrun.fish
+mdextract completion --fish > ~/.config/fish/completions/mdextract.fish
 ```
 
 ## Development
 
 ### Setup
 
-You can also run `mdrun README.md -s mdrun/Development/Setup` to install dependencies and build in one go.
+You can also run `mdextract README.md -s mdrun/Development/Setup | mdrun` to install dependencies and build in one go.
 
 #### Install Dependencies
 
@@ -109,4 +125,4 @@ pnpm lint
 pnpm fmt:check
 ```
 
-You can also run `mdrun README.md -s mdrun/Development` to execute all the development tasks above in order.
+You can also run `mdextract README.md -s mdrun/Development | mdrun` to execute all the development tasks above in order.
