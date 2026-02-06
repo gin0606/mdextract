@@ -93,6 +93,12 @@ const parseCli = async (): Promise<CliOptions> => {
 };
 
 const run = async (options: CliOptions): Promise<void> => {
+  if (!existsSync(options.file)) {
+    console.error(`Error: File not found: ${options.file}`);
+    process.exitCode = 1;
+    return;
+  }
+
   const content = readFileSync(options.file, "utf-8");
   const { codeBlocks, sections } = parseMarkdown(content);
 
@@ -120,6 +126,12 @@ const args = hideBin(process.argv);
 if (args.includes("completion") && args.includes("--fish")) {
   console.log(generateFishCompletion());
 } else {
-  const options = await parseCli();
-  await run(options);
+  try {
+    const options = await parseCli();
+    await run(options);
+  } catch (error: unknown) {
+    const message = error instanceof Error ? error.message : String(error);
+    console.error(`Error: ${message}`);
+    process.exitCode = 1;
+  }
 }
