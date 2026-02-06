@@ -36,6 +36,17 @@ mdrun README.md -s "Setup" --dry-run
 | `-h, --help`    | Show help                                      |
 | `-v, --version` | Show version                                   |
 
+### Supported Code Blocks
+
+mdrun uses [zx](https://google.github.io/zx/) to execute Markdown files. The following code block languages are supported:
+
+| Language tag                  | Execution          |
+| ----------------------------- | ------------------ |
+| `js`, `javascript`            | Runs as JavaScript |
+| `ts`, `typescript`            | Runs as TypeScript |
+| `bash`, `sh`, `shell`         | Runs as shell      |
+| No language tag / other langs | Skipped            |
+
 ## Shell Completion
 
 ### Bash
