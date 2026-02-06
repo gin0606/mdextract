@@ -1,7 +1,7 @@
 import { describe, expect, it } from "vitest";
 
-import { filterCodeBlocks } from "./filter.js";
-import type { CodeBlock } from "./types.js";
+import { extractMarkdown, filterCodeBlocks } from "./filter.js";
+import type { CodeBlock, Section } from "./types.js";
 
 const makeBlock = (path: string, code: string): CodeBlock => ({
   code,
@@ -48,5 +48,63 @@ describe("filterCodeBlocks", () => {
   it("should return empty array for non-existent section", () => {
     const result = filterCodeBlocks(blocks, "NonExistent");
     expect(result).toHaveLength(0);
+  });
+});
+
+const markdownContent = `# Project
+
+## Setup
+
+\`\`\`bash
+createdb myapp
+\`\`\`
+
+### Database
+
+\`\`\`bash
+psql -d myapp
+\`\`\`
+
+## Development
+
+\`\`\`bash
+npm run dev
+\`\`\`
+`;
+
+const markdownSections: readonly Section[] = [
+  { heading: "Project", level: 1, path: "Project", startOffset: 0 },
+  { heading: "Setup", level: 2, path: "Project/Setup", startOffset: 11 },
+  { heading: "Database", level: 3, path: "Project/Setup/Database", startOffset: 49 },
+  { heading: "Development", level: 2, path: "Project/Development", startOffset: 90 },
+];
+
+describe("extractMarkdown", () => {
+  it("should return full content when sectionPath is undefined", () => {
+    const sectionPath: string | undefined = undefined;
+    const result = extractMarkdown(markdownContent, markdownSections, sectionPath);
+    expect(result).toBe(markdownContent);
+  });
+
+  it("should extract by exact section match", () => {
+    const result = extractMarkdown(markdownContent, markdownSections, "Project/Development");
+    expect(result).toBe("## Development\n\n```bash\nnpm run dev\n```\n");
+  });
+
+  it("should extract by prefix match including child sections", () => {
+    const result = extractMarkdown(markdownContent, markdownSections, "Project/Setup");
+    expect(result).toContain("## Setup");
+    expect(result).toContain("### Database");
+    expect(result).not.toContain("## Development");
+  });
+
+  it("should return empty string for non-existent section", () => {
+    const result = extractMarkdown(markdownContent, markdownSections, "NonExistent");
+    expect(result).toBe("");
+  });
+
+  it("should extract last section to end of content", () => {
+    const result = extractMarkdown(markdownContent, markdownSections, "Project/Development");
+    expect(result).toBe(markdownContent.slice(90));
   });
 });
