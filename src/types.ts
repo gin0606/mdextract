@@ -1,5 +1,3 @@
-import type { Root } from "mdast";
-
 export type Section = {
   readonly heading: string;
   readonly level: number;
@@ -23,5 +21,3 @@ export type CliOptions = {
   readonly list: boolean;
   readonly sectionPath: string | undefined;
 };
-
-export type MarkdownRoot = Root;

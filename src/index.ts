@@ -1,4 +1,4 @@
-export type { Section, CodeBlock, ParseResult, CliOptions, MarkdownRoot } from "./types.js";
+export type { Section, CodeBlock, ParseResult } from "./types.js";
 
 export { filterCodeBlocks } from "./filter.js";
 export { formatDryRun, formatSectionList } from "./formatter.js";
