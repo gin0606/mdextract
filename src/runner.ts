@@ -10,7 +10,7 @@ export const runMarkdown = async (markdown: string): Promise<void> => {
   const tempPath = join(tmpdir(), `mdrun-${Date.now()}-${Math.random().toString(36).slice(2)}.md`);
   try {
     await writeFile(tempPath, markdown, "utf-8");
-    await $`node ${zxPath} ${tempPath}`;
+    await $`node ${zxPath} --verbose ${tempPath}`;
   } finally {
     await unlink(tempPath).catch(() => {});
   }
