@@ -45,5 +45,13 @@
     "typescript/prefer-function-type": "error",
     "unicorn/filename-case": ["error", { "case": "kebabCase" }],
     "unicorn/no-anonymous-default-export": "error"
-  }
+  },
+  "overrides": [
+    {
+      "files": ["src/**/*.test.ts"],
+      "rules": {
+        "eslint/max-lines-per-function": "off"
+      }
+    }
+  ]
 }
