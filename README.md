@@ -5,7 +5,7 @@ A CLI tool that executes code blocks from Markdown files. Makes development setu
 ## Install
 
 ```bash
-npm install -g mdrun
+npm install -g @gin0606/mdrun
 ```
 
 ## Usage
