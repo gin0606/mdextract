@@ -2,7 +2,13 @@
   "name": "@gin0606/mdrun",
   "version": "0.0.1",
   "description": "CLI tool to execute code blocks from README.md for easier development setup",
-  "keywords": [],
+  "keywords": [
+    "cli",
+    "code-blocks",
+    "developer-tools",
+    "markdown",
+    "readme"
+  ],
   "license": "ISC",
   "author": "gin0606 (https://github.com/gin0606)",
   "repository": {
