@@ -1,7 +1,7 @@
 {
-  "name": "@gin0606/mdrun",
+  "name": "@gin0606/mdextract",
   "version": "0.0.1",
-  "description": "CLI tool to execute code blocks from README.md for easier development setup",
+  "description": "CLI tool to extract and execute code blocks from Markdown files",
   "keywords": [
     "cli",
     "code-blocks",
@@ -13,7 +13,7 @@
   "author": "gin0606 (https://github.com/gin0606)",
   "repository": {
     "type": "git",
-    "url": "https://github.com/gin0606/mdrun.git"
+    "url": "https://github.com/gin0606/mdextract.git"
   },
   "bin": {
     "mdextract": "dist/mdextract.js",

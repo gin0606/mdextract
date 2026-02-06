@@ -29,12 +29,12 @@ describe("runMarkdown", () => {
     await runMarkdown("# Test\n\n```bash\necho hello\n```\n");
 
     expect(mockWriteFile).toHaveBeenCalledWith(
-      expect.stringContaining("mdrun-"),
+      expect.stringContaining("mdextract-"),
       "# Test\n\n```bash\necho hello\n```\n",
       "utf-8",
     );
     expect(mockFactory).toHaveBeenCalled();
-    expect(mockUnlink).toHaveBeenCalledWith(expect.stringContaining("mdrun-"));
+    expect(mockUnlink).toHaveBeenCalledWith(expect.stringContaining("mdextract-"));
 
     // Restore default behavior for other tests
     mockFactory.mockImplementation(() => mockDollar);
@@ -53,7 +53,7 @@ describe("runMarkdown", () => {
       "zx failed",
     );
 
-    expect(mockUnlink).toHaveBeenCalledWith(expect.stringContaining("mdrun-"));
+    expect(mockUnlink).toHaveBeenCalledWith(expect.stringContaining("mdextract-"));
 
     // Restore default behavior for other tests
     mockFactory.mockImplementation(() => mockDollar);

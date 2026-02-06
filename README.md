@@ -1,4 +1,4 @@
-# mdrun
+# mdextract
 
 A toolkit for extracting and executing code blocks from Markdown files. Makes development setup easier and keeps README maintained.
 
@@ -8,7 +8,7 @@ A toolkit for extracting and executing code blocks from Markdown files. Makes de
 ## Install
 
 ```bash
-npm install -g @gin0606/mdrun
+npm install -g @gin0606/mdextract
 ```
 
 ## Usage
@@ -54,7 +54,7 @@ mdextract README.md | mdrun
 
 ### Supported Code Blocks
 
-mdrun uses [zx](https://google.github.io/zx/) to execute Markdown files. The following code block languages are supported:
+`mdrun` uses [zx](https://google.github.io/zx/) to execute Markdown files. The following code block languages are supported:
 
 | Language tag                  | Execution          |
 | ----------------------------- | ------------------ |
@@ -87,7 +87,7 @@ mdextract completion --fish > ~/.config/fish/completions/mdextract.fish
 
 ### Setup
 
-You can also run `mdextract README.md -s mdrun/Development/Setup | mdrun` to install dependencies and build in one go.
+You can also run `mdextract README.md -s mdextract/Development/Setup | mdrun` to install dependencies and build in one go.
 
 #### Install Dependencies
 
@@ -125,4 +125,4 @@ pnpm lint
 pnpm fmt:check
 ```
 
-You can also run `mdextract README.md -s mdrun/Development | mdrun` to execute all the development tasks above in order.
+You can also run `mdextract README.md -s mdextract/Development | mdrun` to execute all the development tasks above in order.

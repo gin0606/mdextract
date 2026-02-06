@@ -7,7 +7,10 @@ import { $ } from "zx";
 
 export const runMarkdown = async (markdown: string): Promise<void> => {
   const zxPath = fileURLToPath(import.meta.resolve("zx/cli"));
-  const tempPath = join(tmpdir(), `mdrun-${Date.now()}-${Math.random().toString(36).slice(2)}.md`);
+  const tempPath = join(
+    tmpdir(),
+    `mdextract-${Date.now()}-${Math.random().toString(36).slice(2)}.md`,
+  );
   try {
     await writeFile(tempPath, markdown, "utf-8");
     await $`node ${zxPath} --verbose ${tempPath}`;
