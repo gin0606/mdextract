@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 
-import { readFileSync } from "node:fs";
+import { existsSync, readFileSync } from "node:fs";
 
 import yargs from "yargs";
 import { hideBin } from "yargs/helpers";
@@ -11,6 +11,22 @@ import { filterCodeBlocks } from "./filter.js";
 import { formatDryRun, formatSectionList } from "./formatter.js";
 import { parseMarkdown } from "./parser.js";
 import { runCodeBlocks } from "./runner.js";
+
+const completeSectionPath = (
+  _current: string,
+  argv: Record<string, unknown>,
+  done: (completions: readonly string[]) => void,
+): void => {
+  const positionals = argv["_"];
+  const file = Array.isArray(positionals) ? (positionals.at(0) as unknown) : undefined;
+  if (typeof file !== "string" || !existsSync(file)) {
+    done([]);
+    return;
+  }
+  const content = readFileSync(file, "utf-8");
+  const { sections } = parseMarkdown(content);
+  done(sections.map((s) => s.path));
+};
 
 const parseCli = async (): Promise<CliOptions> => {
   const argv = await yargs(hideBin(process.argv))
@@ -38,6 +54,7 @@ const parseCli = async (): Promise<CliOptions> => {
       describe: "Show code blocks to be executed (no execution)",
       type: "boolean",
     })
+    .completion("completion", "Generate shell completion script", completeSectionPath)
     .strict()
     .help()
     .version()
