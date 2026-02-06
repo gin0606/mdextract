@@ -12,12 +12,14 @@ pnpm install
 `;
     const result = parseMarkdown(content);
 
-    expect(result.sections).toEqual([{ heading: "Setup", level: 1, path: "Setup" }]);
+    expect(result.sections).toEqual([
+      { heading: "Setup", level: 1, path: "Setup", startOffset: 0 },
+    ]);
     expect(result.codeBlocks).toEqual([
       {
         code: "pnpm install",
         language: "bash",
-        section: { heading: "Setup", level: 1, path: "Setup" },
+        section: { heading: "Setup", level: 1, path: "Setup", startOffset: 0 },
       },
     ]);
   });
@@ -48,11 +50,11 @@ npm run dev
     const result = parseMarkdown(content);
 
     expect(result.sections).toEqual([
-      { heading: "Project", level: 1, path: "Project" },
-      { heading: "Setup", level: 2, path: "Project/Setup" },
-      { heading: "Database", level: 3, path: "Project/Setup/Database" },
-      { heading: "Redis", level: 3, path: "Project/Setup/Redis" },
-      { heading: "Development", level: 2, path: "Project/Development" },
+      { heading: "Project", level: 1, path: "Project", startOffset: 0 },
+      { heading: "Setup", level: 2, path: "Project/Setup", startOffset: 11 },
+      { heading: "Database", level: 3, path: "Project/Setup/Database", startOffset: 21 },
+      { heading: "Redis", level: 3, path: "Project/Setup/Redis", startOffset: 63 },
+      { heading: "Development", level: 2, path: "Project/Development", startOffset: 100 },
     ]);
 
     expect(result.codeBlocks).toHaveLength(3);
@@ -75,8 +77,8 @@ echo second
       const result = parseMarkdown(content);
 
       expect(result.sections).toEqual([
-        { heading: "First", level: 2, path: "First" },
-        { heading: "Second", level: 2, path: "Second" },
+        { heading: "First", level: 2, path: "First", startOffset: 0 },
+        { heading: "Second", level: 2, path: "Second", startOffset: 34 },
       ]);
 
       expect(result.codeBlocks).toHaveLength(2);

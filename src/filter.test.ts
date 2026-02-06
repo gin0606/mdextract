@@ -6,7 +6,7 @@ import type { CodeBlock } from "./types.js";
 const makeBlock = (path: string, code: string): CodeBlock => ({
   code,
   language: "bash",
-  section: { heading: path.split("/").at(-1) ?? "", level: 1, path },
+  section: { heading: path.split("/").at(-1) ?? "", level: 1, path, startOffset: 0 },
 });
 
 const blocks: readonly CodeBlock[] = [

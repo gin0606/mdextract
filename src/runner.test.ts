@@ -13,7 +13,7 @@ vi.mock("zx", () => ({ $: mockFactory }));
 const makeBlock = (code: string, language?: string): CodeBlock => ({
   code,
   language,
-  section: { heading: "Test", level: 1, path: "Test" },
+  section: { heading: "Test", level: 1, path: "Test", startOffset: 0 },
 });
 
 describe("runCodeBlocks", () => {

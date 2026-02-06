@@ -29,7 +29,8 @@ const processHeading = (node: Heading, stack: HeadingStackItem[], sections: Sect
   const text = extractText(node.children);
   stack.push({ depth: node.depth, text });
   const path = buildPath(stack);
-  sections.push({ heading: text, level: node.depth, path });
+  const startOffset = node.position?.start.offset ?? 0;
+  sections.push({ heading: text, level: node.depth, path, startOffset });
 };
 
 const processNode = (

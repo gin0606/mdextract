@@ -6,11 +6,11 @@ import type { CodeBlock, Section } from "./types.js";
 describe("formatSectionList", () => {
   it("should format sections with indentation", () => {
     const sections: readonly Section[] = [
-      { heading: "Project", level: 1, path: "Project" },
-      { heading: "Setup", level: 2, path: "Project/Setup" },
-      { heading: "Database", level: 3, path: "Project/Setup/Database" },
-      { heading: "Redis", level: 3, path: "Project/Setup/Redis" },
-      { heading: "Development", level: 2, path: "Project/Development" },
+      { heading: "Project", level: 1, path: "Project", startOffset: 0 },
+      { heading: "Setup", level: 2, path: "Project/Setup", startOffset: 0 },
+      { heading: "Database", level: 3, path: "Project/Setup/Database", startOffset: 0 },
+      { heading: "Redis", level: 3, path: "Project/Setup/Redis", startOffset: 0 },
+      { heading: "Development", level: 2, path: "Project/Development", startOffset: 0 },
     ];
 
     const result = formatSectionList(sections);
@@ -41,12 +41,12 @@ describe("formatDryRun", () => {
       {
         code: "createdb myapp",
         language: "bash",
-        section: { heading: "Database", level: 3, path: "Setup/Database" },
+        section: { heading: "Database", level: 3, path: "Setup/Database", startOffset: 0 },
       },
       {
         code: "redis-server",
         language: "bash",
-        section: { heading: "Redis", level: 3, path: "Setup/Redis" },
+        section: { heading: "Redis", level: 3, path: "Setup/Redis", startOffset: 0 },
       },
     ];
 
@@ -76,7 +76,7 @@ describe("formatDryRun", () => {
       {
         code: "echo hello",
         language: undefined,
-        section: { heading: "Test", level: 1, path: "Test" },
+        section: { heading: "Test", level: 1, path: "Test", startOffset: 0 },
       },
     ];
 

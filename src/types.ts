@@ -2,6 +2,7 @@ export type Section = {
   readonly heading: string;
   readonly level: number;
   readonly path: string;
+  readonly startOffset: number;
 };
 
 export type CodeBlock = {
