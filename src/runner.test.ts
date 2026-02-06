@@ -64,7 +64,7 @@ describe("runCodeBlocks", () => {
 
     const { runCodeBlocks } = await import("./runner.js");
     await expect(() => runCodeBlocks([makeBlock("exit 1", "bash")])).rejects.toThrow(
-      "command failed",
+      'Failed to execute bash code block in section "Test"',
     );
   });
 });

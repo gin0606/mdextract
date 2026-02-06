@@ -23,7 +23,14 @@ const executeBlock = async (block: CodeBlock): Promise<void> => {
 
 export const runCodeBlocks = async (codeBlocks: readonly CodeBlock[]): Promise<void> => {
   for (const block of codeBlocks) {
-    // oxlint-disable-next-line eslint/no-await-in-loop -- intentional sequential execution
-    await executeBlock(block);
+    try {
+      // oxlint-disable-next-line eslint/no-await-in-loop -- intentional sequential execution
+      await executeBlock(block);
+    } catch (error: unknown) {
+      const lang = block.language ?? "shell";
+      throw new Error(`Failed to execute ${lang} code block in section "${block.section.path}"`, {
+        cause: error,
+      });
+    }
   }
 };
