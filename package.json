@@ -16,6 +16,7 @@
     "url": "https://github.com/gin0606/mdrun.git"
   },
   "bin": {
+    "mdextract": "dist/mdextract.js",
     "mdrun": "dist/cli.js"
   },
   "files": [
