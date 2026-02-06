@@ -60,6 +60,8 @@ mdrun completion --fish > ~/.config/fish/completions/mdrun.fish
 
 ### Setup
 
+You can also run `mdrun README.md -s mdrun/Development/Setup` to install dependencies and build in one go.
+
 #### Install Dependencies
 
 ```bash
@@ -95,3 +97,5 @@ pnpm lint
 ```bash
 pnpm fmt:check
 ```
+
+You can also run `mdrun README.md -s mdrun/Development` to execute all the development tasks above in order.
