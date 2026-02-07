@@ -1,9 +1,9 @@
 # mdextract
 
-A toolkit for extracting and executing code blocks from Markdown files. Makes development setup easier and keeps README maintained.
+Extract sections and code blocks from Markdown files. Pipe into [zx](https://google.github.io/zx/) to execute them — makes development setup easier and keeps README maintained.
 
 - **mdextract** — Extract sections from Markdown files to stdout
-- **mdrun** — Read Markdown from stdin and execute code blocks via [zx](https://google.github.io/zx/)
+- **mdrun** — Thin wrapper around zx for stdin execution (temporary; see [below](#mdrun-cli))
 
 ## Install
 
@@ -48,6 +48,8 @@ mdextract README.md -s "Setup" --dry-run
 | `-v, --version` | Show version                           |
 
 ### mdrun CLI
+
+> **Note:** `mdrun` is a temporary workaround. zx currently has a bug that prevents it from reading Markdown via pipe (`mdextract ... | npx zx --ext='.md'`). This has been [fixed](https://github.com/google/zx/commit/2f6896ea6aa47190d11125f0024726b16d3ae745) but not yet released. Once a zx release includes this fix, `mdrun` will be removed and you can use `mdextract ... | npx zx --ext='.md'` directly.
 
 `mdrun` reads Markdown from stdin and executes code blocks using zx.
 
