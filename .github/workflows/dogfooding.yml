@@ -1,0 +1,31 @@
+name: Dogfooding
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  dogfooding:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "24"
+          cache: pnpm
+      - run: pnpm install --frozen-lockfile
+      - run: pnpm build
+
+      - name: "mdextract: list sections"
+        run: node dist/mdextract.js README.md --list
+
+      - name: "mdextract: Setup (dry-run)"
+        run: node dist/mdextract.js README.md -s "mdextract/Development/Setup" --dry-run
+
+      - name: "mdextract: Verify (dry-run)"
+        run: node dist/mdextract.js README.md -s "mdextract/Development/Verify" --dry-run
+
+      - name: "mdextract | mdrun: Verify"
+        run: node dist/mdextract.js README.md -s "mdextract/Development/Verify" | node dist/cli.js
