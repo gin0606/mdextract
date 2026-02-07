@@ -13,7 +13,7 @@ npm install -g @gin0606/mdextract
 
 ## Usage
 
-### mdextract
+### mdextract CLI
 
 ```bash
 # Extract all code blocks as Markdown
@@ -47,7 +47,7 @@ mdextract README.md -s "Setup" --dry-run
 | `-h, --help`    | Show help                              |
 | `-v, --version` | Show version                           |
 
-### mdrun
+### mdrun CLI
 
 `mdrun` reads Markdown from stdin and executes code blocks using zx.
 
@@ -59,7 +59,7 @@ mdextract README.md -s "Development/Setup" | mdrun
 mdextract README.md | mdrun
 ```
 
-### Supported Code Blocks
+#### Supported Code Blocks
 
 `mdrun` uses [zx](https://google.github.io/zx/) to execute Markdown files. The following code block languages are supported:
 
@@ -70,21 +70,21 @@ mdextract README.md | mdrun
 | `bash`, `sh`, `shell`         | Runs as shell      |
 | No language tag / other langs | Skipped            |
 
-## Shell Completion
+### Shell Completion
 
-### Bash
+#### Bash
 
 ```bash
 mdextract completion >> ~/.bashrc
 ```
 
-### Zsh
+#### Zsh
 
 ```bash
 mdextract completion >> ~/.zshrc
 ```
 
-### Fish
+#### Fish
 
 ```fish
 mdextract completion --fish > ~/.config/fish/completions/mdextract.fish
@@ -108,25 +108,29 @@ pnpm install
 pnpm build
 ```
 
-### Run Tests
+### Verify
+
+You can also run `mdextract README.md -s mdextract/Development/Verify | mdrun` to run all verification tasks.
+
+#### Run Tests
 
 ```bash
 pnpm test
 ```
 
-### Type Check
+#### Type Check
 
 ```bash
 pnpm typecheck
 ```
 
-### Lint
+#### Lint
 
 ```bash
 pnpm lint
 ```
 
-### Format
+#### Format
 
 ```bash
 pnpm fmt:check
