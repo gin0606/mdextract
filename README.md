@@ -25,6 +25,12 @@ mdextract README.md -s "Development/Setup"
 # List sections
 mdextract README.md --list
 
+# Exclude specific subsections
+mdextract README.md -s "Development/Setup" --exclude "Build"
+
+# Exclude multiple subsections
+mdextract README.md -s "Development/Setup" --exclude "Build" --exclude "Install Dependencies"
+
 # Preview code blocks without output
 mdextract README.md --dry-run
 mdextract README.md -s "Setup" --dry-run
@@ -32,13 +38,14 @@ mdextract README.md -s "Setup" --dry-run
 
 #### Options
 
-| Option          | Description                  |
-| --------------- | ---------------------------- |
-| `-s, --section` | Section path to extract      |
-| `-l, --list`    | List sections                |
-| `-n, --dry-run` | Show code blocks (no output) |
-| `-h, --help`    | Show help                    |
-| `-v, --version` | Show version                 |
+| Option          | Description                            |
+| --------------- | -------------------------------------- |
+| `-s, --section` | Section path to extract                |
+| `-x, --exclude` | Exclude section paths (relative to -s) |
+| `-l, --list`    | List sections                          |
+| `-n, --dry-run` | Show code blocks (no output)           |
+| `-h, --help`    | Show help                              |
+| `-v, --version` | Show version                           |
 
 ### mdrun
 
