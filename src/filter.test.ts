@@ -49,6 +49,33 @@ describe("filterCodeBlocks", () => {
     const result = filterCodeBlocks(blocks, "NonExistent");
     expect(result).toHaveLength(0);
   });
+
+  it("should exclude blocks matching excludePaths", () => {
+    const result = filterCodeBlocks(blocks, "Project/Setup", ["Project/Setup/Database"]);
+    expect(result).toHaveLength(1);
+    expect(result.at(0)?.code).toBe("redis-server");
+  });
+
+  it("should exclude multiple paths", () => {
+    const result = filterCodeBlocks(blocks, "Project/Setup", [
+      "Project/Setup/Database",
+      "Project/Setup/Redis",
+    ]);
+    expect(result).toHaveLength(0);
+  });
+
+  it("should exclude without sectionPath", () => {
+    const result = filterCodeBlocks(blocks, undefined, ["Project/Setup/Database"]);
+    expect(result).toHaveLength(2);
+    expect(result.at(0)?.code).toBe("redis-server");
+    expect(result.at(1)?.code).toBe("npm run dev");
+  });
+
+  it("should exclude descendants of excludePath", () => {
+    const result = filterCodeBlocks(blocks, "Project", ["Project/Setup"]);
+    expect(result).toHaveLength(1);
+    expect(result.at(0)?.code).toBe("npm run dev");
+  });
 });
 
 const markdownContent = `# Project
@@ -106,5 +133,41 @@ describe("extractMarkdown", () => {
   it("should extract last section to end of content", () => {
     const result = extractMarkdown(markdownContent, markdownSections, "Project/Development");
     expect(result).toBe(markdownContent.slice(90));
+  });
+
+  it("should exclude a child section", () => {
+    const result = extractMarkdown(markdownContent, markdownSections, "Project/Setup", [
+      "Project/Setup/Database",
+    ]);
+    expect(result).toContain("## Setup");
+    expect(result).toContain("createdb myapp");
+    expect(result).not.toContain("### Database");
+    expect(result).not.toContain("psql -d myapp");
+  });
+
+  it("should exclude without sectionPath", () => {
+    const result = extractMarkdown(markdownContent, markdownSections, undefined, [
+      "Project/Setup/Database",
+    ]);
+    expect(result).toContain("## Setup");
+    expect(result).toContain("## Development");
+    expect(result).not.toContain("### Database");
+    expect(result).not.toContain("psql -d myapp");
+  });
+
+  it("should handle exclude with no matching sections", () => {
+    const result = extractMarkdown(markdownContent, markdownSections, "Project/Setup", [
+      "Project/Setup/NonExistent",
+    ]);
+    expect(result).toContain("## Setup");
+    expect(result).toContain("### Database");
+  });
+
+  it("should exclude entire subtree", () => {
+    const result = extractMarkdown(markdownContent, markdownSections, "Project", ["Project/Setup"]);
+    expect(result).toContain("# Project");
+    expect(result).not.toContain("## Setup");
+    expect(result).not.toContain("### Database");
+    expect(result).toContain("## Development");
   });
 });
